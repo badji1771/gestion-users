@@ -1,6 +1,7 @@
 # Gestion des utilisateurs
 
 ## Installation
+Pour configurer votre environnement vous aurez besoin de: 
 Télécharger [Java 18](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html),
 Télécharger [Lombok](https://projectlombok.org/download)
 ## Utilisation de l'application

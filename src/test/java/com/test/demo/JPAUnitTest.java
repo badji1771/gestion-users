@@ -110,18 +110,6 @@ public class JPAUnitTest {
 	  
 		  assertThat(userList.size()).isEqualTo(1); 
 	  }
-//	  
-//	  
-//	  @Test 
-//	  public void should_store_a_user_by_service() { 
-//		  UtilisateursDto utilisateur = new UtilisateursDto(0, "Khalifa", localDate, "French", "775273025",
-//	  "Masculin"); 
-//	   service.creerUser(utilisateur);
-//	  
-//	  assertThat(utilisateur).hasFieldOrPropertyWithValue("nom", "Khalifa");
-//	  assertThat(utilisateur).hasFieldOrPropertyWithValue("paysResidence",
-//	  "French"); assertThat(utilisateur).hasFieldOrPropertyWithValue("genre",
-//	  "Masculin"); 
-//	  }
+
 	 
 }

@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.test.demo.aspect.LogEntryExit;
 import com.test.demo.dto.UtilisateursDto;
+import com.test.demo.exceptions.ErrorCodes;
+import com.test.demo.exceptions.InvalideResourceException;
 import com.test.demo.exceptions.ResourceNotFoundException;
 import com.test.demo.mapper.UtilisateurMapper;
 import com.test.demo.model.Utilisateurs;
 import com.test.demo.repository.UtilisateursRepository;
+import com.test.demo.validator.UtilisateurValidator;
 
 
 
@@ -43,13 +46,17 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 	 @Override
 	    public UtilisateursDto getUserById(Long userId) throws ResourceNotFoundException {
 		 Utilisateurs user = utilisateursRepository.findById(userId)
-	                .orElseThrow(() -> new ResourceNotFoundException("User Not found"));
+	                .orElseThrow(() -> new ResourceNotFoundException("l'utilisateur dont l'id = " + userId +" n'existe pas " ,ErrorCodes.USER_NOT_FOUND));
 	        return dtoMapper.fromUser(user);
 	    }
 	
 	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
 	@Override
 	public UtilisateursDto saveUser(UtilisateursDto user) {
+		List<String> errors = UtilisateurValidator.validate(user);
+		if (!errors.isEmpty()) {
+			throw new InvalideResourceException("L\'utilisateur n\'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
+		}
 		Utilisateurs utilisateur = modelMapper.map(user, Utilisateurs.class);
 		return modelMapper.map(utilisateursRepository.save(utilisateur), UtilisateursDto.class);
 	}

@@ -26,14 +26,10 @@ import com.test.demo.repository.UtilisateursRepository;
 @SpringBootTest
 public class UtilisateurRepositoryTest {
 
-//	@Autowired
-//	private TestEntityManager entityManager;
 
 	@Autowired
 	UtilisateursRepository repository;
 
-//	@Autowired
-//	UtilisateurService service;
 
 	Date date = new Date();
 	

@@ -20,6 +20,7 @@ public class UtilisateurValidator {
 			errors.add("Veuillez renseigner le genre de l'utilisateur");
 			errors.add("Veuillez renseigner le pays de l'utilisateur");
 			errors.add("Veuillez renseigner la date de naissance de l'utilisateur");
+			errors.add("Veuillez renseigner la date de naissance de l'utilisateur");
 			return errors;
 		}
 		if (!StringUtils.hasLength(dto.getNom())) {
@@ -33,6 +34,9 @@ public class UtilisateurValidator {
 		}
 		if (!StringUtils.hasLength(dto.getTelephone())) {
 			errors.add("Veuillez renseigner le telephone de l'utilisateur");
+		}
+		if(dto.getDateNaissance()==null) {
+			errors.add("Veuillez renseigner la date de naissance de l'utilisateur");
 		}
 		
 		

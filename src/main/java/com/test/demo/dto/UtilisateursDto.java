@@ -28,7 +28,7 @@ public class UtilisateursDto {
 	private long id;
 	private String nom;
 	@JsonProperty(access = Access.AUTO)
-	@JsonFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateNaissance;
 	private String paysResidence;
 	private String telephone;

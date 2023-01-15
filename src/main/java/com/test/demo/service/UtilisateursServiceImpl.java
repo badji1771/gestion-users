@@ -2,7 +2,6 @@ package com.test.demo.service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -34,12 +33,7 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 	@Autowired
 	private UtilisateurMapper dtoMapper;
 
-	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
-	@Override
-	public void creerUser(UtilisateursDto user) {
-		Utilisateurs utilisateur = modelMapper.map(user, Utilisateurs.class);
-		utilisateursRepository.save(utilisateur);
-	}
+
 
 	
 	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
@@ -57,8 +51,8 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 		if (!errors.isEmpty()) {
 			throw new InvalideResourceException("L\'utilisateur n\'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
 		}
-		Utilisateurs utilisateur = modelMapper.map(user, Utilisateurs.class);
-		return modelMapper.map(utilisateursRepository.save(utilisateur), UtilisateursDto.class);
+		//Utilisateurs utilisateur = modelMapper.map(user, Utilisateurs.class);
+		return modelMapper.map(utilisateursRepository.save(modelMapper.map(user, Utilisateurs.class)), UtilisateursDto.class);
 	}
 	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
 	@Override
@@ -71,10 +65,13 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
 	@Override
     public UtilisateursDto updateUser(UtilisateursDto userDTO) {
-        //log.info("Saving new Customer");
-		Utilisateurs user=dtoMapper.fromUserDTO(userDTO);
-		Utilisateurs savedCustomer = utilisateursRepository.save(user);
-        return dtoMapper.fromUser(savedCustomer);
+		List<String> errors = UtilisateurValidator.validate(userDTO);
+		if (!errors.isEmpty()) {
+			throw new InvalideResourceException("L\'utilisateur n\'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
+		}
+		Utilisateurs userFound = utilisateursRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("l'utilisateur dont l'id = " + userDTO.getId() +" n'existe pas " ,ErrorCodes.USER_NOT_FOUND));
+        return dtoMapper.fromUser(utilisateursRepository.save(dtoMapper.fromUserDTO(userDTO)));
     }
 	
 }

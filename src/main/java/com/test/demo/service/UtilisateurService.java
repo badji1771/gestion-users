@@ -7,7 +7,6 @@ import com.test.demo.exceptions.ResourceNotFoundException;
 
 public interface UtilisateurService {
 	
-	public void creerUser(UtilisateursDto user);
 
 	UtilisateursDto saveUser(UtilisateursDto user);
 

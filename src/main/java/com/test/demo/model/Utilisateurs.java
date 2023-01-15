@@ -52,7 +52,7 @@ public class Utilisateurs {
 
 	@Column(name = "BIRTHDAY", nullable = true)
 	@DateTimeFormat(iso = ISO.DATE)
-	@JsonFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Birthday is mandatory")
 	@Past(message = "Birthday must be a date in the past")
 	private Date dateNaissance;

@@ -8,16 +8,12 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.test.demo.dto.UtilisateursDto;
 import com.test.demo.mapper.UtilisateurMapper;
-import com.test.demo.model.Utilisateurs;
-import com.test.demo.repository.UtilisateursRepository;
 import com.test.demo.service.UtilisateurService;
 
 @RunWith(SpringRunner.class)
@@ -33,13 +29,13 @@ public class UtilisateurServiceTest {
 //	@MockBean
 //	private UtilisateursRepository UtilisateursRepository;
 	
-	Date localDate = new Date();
+	Date date = new Date();
 	@Test
 	public void testCreateUser() {
 		UtilisateursDto dto = UtilisateursDto.builder()
 				.nom("Badji")
 				.genre("Masculin")
-				.dateNaissance(new Date())
+				.dateNaissance(date)
 				.paysResidence("Senegal")
 				.telephone("778955656")
 				.build();
@@ -52,18 +48,28 @@ public class UtilisateurServiceTest {
 		assertEquals(dto.getTelephone(), save.getTelephone());
 		assertEquals(dto.getGenre(), save.getGenre());
 	}
-//	@Test
-//	public void testGetUserById() {
-//		 Utilisateurs utilisateur = new Utilisateurs(0, "Badji", localDate, "French","775273025", "Masculin"); 
-//		 Mockito.when(UtilisateursRepository.findById(1L)).thenReturn(utilisateur);
-//		 assertThat(utilisateurService.saveUser(dtoMapper.fromUser(utilisateur))).isEqualTo(dtoMapper.fromUser(utilisateur));
-//	}
-//	@Test
-//	public void testUpdateUserById() {
-//		 Utilisateurs utilisateur = new Utilisateurs(0, "Badji", localDate, "French","775273025", "Masculin"); 
-//		 Mockito.when(UtilisateursRepository.findById(1L)).thenReturn(utilisateur);
-//		 utilisateur.setNom("Diatta");
-//		 Mockito.when(UtilisateursRepository.save(utilisateur)).thenReturn(utilisateur);
-//		 assertThat(utilisateurService.updateUser(dtoMapper.fromUser(utilisateur))).isEqualTo(dtoMapper.fromUser(utilisateur));
-//	}
+	@Test
+	public void testFindUserById() {
+		UtilisateursDto user1 = UtilisateursDto.builder()
+				.nom("Badji")
+				.genre("Masculin")
+				.dateNaissance(date)
+				.paysResidence("Senegal")
+				.telephone("778955656")
+				.build();
+		UtilisateursDto user2 = UtilisateursDto.builder()
+				.nom("Badji")
+				.genre("Masculin")
+				.dateNaissance(date)
+				.paysResidence("Senegal")
+				.telephone("778955656")
+				.build();
+		UtilisateursDto saveUser1 = utilisateurService.saveUser(user1);
+		UtilisateursDto saveUser2 = utilisateurService.saveUser(user2);
+		
+		UtilisateursDto userFound = utilisateurService.getUserById(saveUser2.getId());
+		assertThat(userFound).isEqualTo(user2); 
+	}
+
+
 }

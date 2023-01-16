@@ -7,5 +7,5 @@ Télécharger [Lombok](https://projectlombok.org/download)
 ## Utilisation de l'application
 Pour tester l'application j'ai intéger swagger, je vous met le lien pour l'acces à l'application
 ```link
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/swagger-ui/
 ```

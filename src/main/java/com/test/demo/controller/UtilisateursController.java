@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +73,16 @@ public class UtilisateursController {
 	)
     public UtilisateursDto getUser(@PathVariable(name = "id") Long userId) throws ResourceNotFoundException {
         return utilisateurService.getUserById(userId);
+    }
+	
+	@DeleteMapping("/users/{id}")
+	@ApiOperation(value = "Supprimer un utilisateur", notes = "Cette methode permet de supprimer un utilisateur")
+	@ApiResponses(value = {
+				@ApiResponse(code = 200, message = "l'utilisateur a ete supprimer avec succés"),
+				@ApiResponse(code = 404, message = "Aucun n'utilisateur n'existe dans la base de donnée avec l'id fourni")
+	}
+	)
+    public void deleteUser(@PathVariable(name = "id") Long id){
+		utilisateurService.deleteUser(id);
     }
 }

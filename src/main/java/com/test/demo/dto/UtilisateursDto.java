@@ -27,17 +27,17 @@ import lombok.NoArgsConstructor;
 public class UtilisateursDto {
 
 	private long id;
-	@NotNull(message = "First Name cannot be null")
+	
 	private String nom;
-	@NotNull(message = "First Name cannot be null")
+	
 	@JsonProperty(access = Access.AUTO)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateNaissance;
-	@NotNull(message = "First Name cannot be null")
+	
 	private String paysResidence;
-	@NotNull(message = "First Name cannot be null")
+	
 	private String telephone;
-	@NotNull(message = "First Name cannot be null")
+	
 	private String genre;
 	
 	

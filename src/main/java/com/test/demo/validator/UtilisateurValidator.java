@@ -26,19 +26,10 @@ public class UtilisateurValidator {
 		if (!StringUtils.hasLength(dto.getNom())) {
 			errors.add("Veuillez renseigner le nom de l'utilisateur");
 		}
-		if (!StringUtils.hasLength(dto.getGenre())) {
-			errors.add("Veuillez renseigner le genre de l'utilisateur");
-		}
+		
 		if (!StringUtils.hasLength(dto.getPaysResidence())) {
 			errors.add("Veuillez renseigner le pays de residence de l'utilisateur");
 		}
-		if (!StringUtils.hasLength(dto.getTelephone())) {
-			errors.add("Veuillez renseigner le telephone de l'utilisateur");
-		}
-		if(dto.getDateNaissance()==null) {
-			errors.add("Veuillez renseigner la date de naissance de l'utilisateur");
-		}
-		
 		
 		return errors;
 	}

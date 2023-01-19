@@ -40,7 +40,7 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 	 @Override
 	    public UtilisateursDto getUserById(Long userId) throws ResourceNotFoundException {
 		 Utilisateurs user = utilisateursRepository.findById(userId)
-	                .orElseThrow(() -> new ResourceNotFoundException("l'utilisateur dont l'id = " + userId +" n'existe pas " ,ErrorCodes.USER_NOT_FOUND));
+	                .orElseThrow(() -> new ResourceNotFoundException("Aucun n'utilisateur n'existe dans la base de donnée avec l'id fourni" ,ErrorCodes.USER_NOT_FOUND));
 	        return dtoMapper.fromUser(user);
 	    }
 	
@@ -49,7 +49,7 @@ public class UtilisateursServiceImpl implements UtilisateurService{
 	public UtilisateursDto saveUser(UtilisateursDto user) {
 		List<String> errors = UtilisateurValidator.validate(user);
 		if (!errors.isEmpty()) {
-			throw new InvalideResourceException("L\'utilisateur n\'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
+			throw new InvalideResourceException("L'utilisateur fourni n'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
 		}
 		//Utilisateurs utilisateur = modelMapper.map(user, Utilisateurs.class);
 		return modelMapper.map(utilisateursRepository.save(modelMapper.map(user, Utilisateurs.class)), UtilisateursDto.class);
@@ -67,11 +67,18 @@ public class UtilisateursServiceImpl implements UtilisateurService{
     public UtilisateursDto updateUser(UtilisateursDto userDTO) {
 		List<String> errors = UtilisateurValidator.validate(userDTO);
 		if (!errors.isEmpty()) {
-			throw new InvalideResourceException("L\'utilisateur n\'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
+			throw new InvalideResourceException("L'utilisateur fourni n'est pas valide",ErrorCodes.USER_NOT_FOUND,errors);
 		}
 		Utilisateurs userFound = utilisateursRepository.findById(userDTO.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("l'utilisateur dont l'id = " + userDTO.getId() +" n'existe pas " ,ErrorCodes.USER_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("Aucun n'utilisateur n'existe dans la base de donnée avec l'id fourni" ,ErrorCodes.USER_NOT_FOUND));
         return dtoMapper.fromUser(utilisateursRepository.save(dtoMapper.fromUserDTO(userDTO)));
     }
-	
+	@LogEntryExit(showArgs = true, showResult = true, unit = ChronoUnit.MILLIS)
+	@Override
+    public UtilisateursDto deleteUser(Long userId){
+		Utilisateurs userFound = utilisateursRepository.findById(userId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Aucun n'utilisateur n'existe dans la base de donnée avec l'id fourni" ,ErrorCodes.USER_NOT_FOUND));
+		utilisateursRepository.delete(userFound);
+		return dtoMapper.fromUser(userFound);
+    }
 }

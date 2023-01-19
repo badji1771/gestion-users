@@ -15,4 +15,6 @@ public interface UtilisateurService {
 	UtilisateursDto getUserById(Long userId) throws ResourceNotFoundException;
 
 	UtilisateursDto updateUser(UtilisateursDto userDTO);
+
+	UtilisateursDto deleteUser(Long userId);
 }

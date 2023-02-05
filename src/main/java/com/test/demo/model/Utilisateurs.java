@@ -13,8 +13,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -32,11 +30,6 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "utilisateurs")
 public class Utilisateurs {
-
-	
-
-	
-
 	
 
 	@Id

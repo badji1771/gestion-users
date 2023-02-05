@@ -98,9 +98,9 @@ public class UserControllerTest {
 	@Test
 	public void updateUser() throws Exception{
 		ObjectMapper objectMapper = new ObjectMapper();
-		Long id = 1L;
+		Long id = 2L;
 		UtilisateursDto dto = UtilisateursDto.builder()
-				.id(1L)
+				.id(id)
 				.nom("Diatta")
 				.genre("Masculin")
 				.dateNaissance(new Date())
@@ -117,7 +117,6 @@ public class UserControllerTest {
 				.build();
 		when(utilisateurService.getUserById(id)).thenReturn(dto);
 		when(utilisateurService.saveUser(any(UtilisateursDto.class))).thenReturn(updateDto);
-		
 		mvc.perform(put("/api/users/{id}",id).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(updateDto)))
 		.andExpect(status().isOk())
@@ -129,10 +128,17 @@ public class UserControllerTest {
 	@Test
 	 public void deleteUser() throws Exception{
 		 Long id = 1L;
-		 
-		 doNothing().when(utilisateurService).deleteUser(id);
+		 UtilisateursDto dto = UtilisateursDto.builder()
+					.id(id)
+					.nom("Diatta")
+					.genre("Masculin")
+					.dateNaissance(new Date())
+					.paysResidence("Senegal")
+					.telephone("771232322")
+					.build();
+		 when(utilisateurService.deleteUser(id)).thenReturn(dto);
 		 mvc.perform(delete("/api/users/{id}",id))
-		 .andExpect(status().isNoContent())
+		 .andExpect(status().isOk())
 		 .andDo(print());
 	 }
 }
